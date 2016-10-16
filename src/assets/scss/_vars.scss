@@ -1,0 +1,16 @@
+$color-the-white: #ffffff;
+$color-the-black: #000000;
+$color-menu-border: lighten(#ccc, 15);
+$color-link: #2F6FAD;
+$color-link-active: #333;
+$color-text: #ccc;
+$color-page-h2: #ccc;
+$color-page-h3: #ccc;
+
+$color-shadow: rgba(0, 0, 0, 0.2);
+$color-dark: #131F24;
+$color-the-orange: #ff7e00;
+
+$breakpoint-tablet: 720px;
+
+@import "../../components/SDK/SDK-globals";

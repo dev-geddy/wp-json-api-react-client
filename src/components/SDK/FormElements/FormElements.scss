@@ -1,0 +1,53 @@
+@import '../SDK-globals';
+
+$space-between-inputs: 10px;
+
+.input-text {
+  outline: none;
+  padding: 8px 10px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 3px;
+  background-color: $color-the-white;
+  border: 1px solid $color-header-separator-grey;
+  box-shadow: none;
+  margin-right: $space-between-inputs;
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:focus {
+    border: 1px solid $color-header-separator-grey;
+    background-color: $color-the-white;
+    outline: none;
+    box-shadow: none;
+    // transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+  }
+}
+
+.input-radio {
+  margin-right: $space-between-inputs;
+  position: relative;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.input-checkbox {
+  margin-right: $space-between-inputs;
+  position: relative;
+  &:before {
+    display: table-cell;
+    content: " ";
+    position: absolute;
+    top:0;
+    left:0;
+    width: 1em;
+    height: 1em;
+    background-color: $color-the-white;
+    border: 1px solid $color-header-separator-grey;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}

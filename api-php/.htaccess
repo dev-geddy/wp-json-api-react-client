@@ -1,0 +1,27 @@
+RewriteEngine On
+
+# Rewrite API to PHP URL on Apache server where no NodeJS API is available
+RewriteCond %(REQUEST_FILENAME) !-f
+RewriteCond %(REQUEST_FILENAME) !-d
+RewriteRule ^get\-css\-source/([a-zA-Z0-9]+)\.css$ /api.php?css_file_name=$1.css [NC,L]
+
+RewriteCond %(REQUEST_FILENAME) !-f
+RewriteCond %(REQUEST_FILENAME) !-d
+RewriteRule ^api/get\-css\-source/([a-zA-Z0-9]+)\.css$ /api-php/api.php?css_file_name=$1.css [NC,L]
+
+# Rewrite to somewhere if BOTS
+# RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|Baiduspider) [NC]
+# RewriteRule .* - [R=403,L]
+
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# Redirects to: /index.html
+RewriteRule ^ /index.html [L]
+
+#Gzip
+<ifmodule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x- javascript application/javascript
+</ifmodule>
+#End Gzip

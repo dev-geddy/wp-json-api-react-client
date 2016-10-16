@@ -1,0 +1,78 @@
+#appNavigation {
+  @media all and (max-width: 720px) {
+    // temporary mobile solution
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    transform: translate3d(0, 0, 0);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid $color-the-white;
+    display: none;
+  }
+  &.app-navigation-active {
+    display: block;
+    height: 100%;
+    overflow: auto;
+    padding-top: 50px;
+    background-color: $color-the-white;
+  }
+}
+
+.app-navigation-toggle {
+  display: none;
+  @media all and (max-width: 720px) {
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    z-index: 1000;
+  }
+}
+
+.app-navigation {
+  border-right: 3px solid $color-menu-border;
+  min-height: 100%;
+  a {
+    display: block;
+    position: relative;
+    font-size: 15px;
+    line-height: 20px;
+    padding: 15px 15px 15px 35px;
+    text-decoration: none;
+    background-color: $color-the-white;
+    color: $color-the-black;
+    border-bottom: 1px solid $color-menu-border;
+    transition-duration: 0.3s;
+    &:after {
+      display: block;
+      position: absolute;
+      right: -3px;
+      margin: 0;
+      top: 0;
+      height: 51px;
+      content: " ";
+      transition-duration: 0.3s;
+      border-right: 3px solid transparent;
+    }
+    &:hover {
+      &:after {
+        border-right: 3px solid #00e600;
+      }
+    }
+    &.current {
+      color: lighten($color-the-black, 25);
+      box-shadow: inset 10px 0 20px lighten($color-shadow, 40);
+      text-shadow: 0 -1px 2px $color-the-white;
+      &:after {
+        border-right: 3px solid #33ccff;
+      }
+    }
+  }
+  .navSeparator {
+    height: 10px;
+    border-top: 1px solid $color-the-white;
+    background-color: #fafafa;
+    border-bottom: 1px solid $color-menu-border;
+  }
+}

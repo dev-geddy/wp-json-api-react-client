@@ -1,0 +1,14 @@
+.error {
+  box-shadow: 0 0 1px darkred;
+  border-radius: 2px;
+  padding: 4px 8px;
+  margin: 5px 0;
+  color: darkred;
+
+  line-height: 24px;
+  i {
+    margin: 0 5px 0 0;
+    display: inline-block;
+    float: left;
+  }
+}

@@ -1,0 +1,49 @@
+@import "../SDK-globals";
+
+.g86-vertical-nav {
+  position: relative;
+  border-right: 3px solid $color-menu-border-grey;
+  max-width: 300px;
+  a {
+    display: block;
+    position: relative;
+    font-size: 15px;
+    line-height: 20px;
+    padding: 15px 15px 15px 35px;
+    text-decoration: none;
+    background-color: $color-the-white;
+    color: $color-menu-text-grey;
+    border-bottom: 1px solid $color-menu-border-grey;
+    transition-duration: 0.3s;
+    &:after {
+      display: block;
+      position: absolute;
+      right: -3px;
+      margin: 0;
+      top: 0;
+      height: 51px;
+      content: " ";
+      transition-duration: 0.3s;
+      border-right: 3px solid transparent;
+    }
+    &:hover {
+      &:after {
+        border-right: 3px solid $color-g86-menu-highlight-green;
+      }
+    }
+    &.current {
+      color: lighten($color-menu-text-grey, 15);
+      box-shadow: inset 10px 0 20px lighten($color-menu-shadow, 40);
+      text-shadow: 0 -1px 2px $color-the-white;
+      &:after {
+        border-right: 3px solid $color-g86-menu-highlight-blue;
+      }
+    }
+  }
+  .nav-separator {
+    height: 10px;
+    border-top: 1px solid $color-the-white;
+    background-color: $color-page-header-bg-grey;
+    border-bottom: 1px solid $color-menu-border-grey;
+  }
+}

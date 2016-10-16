@@ -1,0 +1,155 @@
+@import '../SDK-globals';
+
+// spinCCW
+@keyframes spinCW {
+  0%   {transform: rotateZ(0deg);}
+  50%  {transform: rotateZ(180deg);}
+  100% {transform: rotateZ(360deg);}
+}
+@mixin rotate-animation($duration) {
+  transform: translate3d(0, 0, 0);
+  animation: spinCW;
+  animation-duration: $duration;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
+}
+
+@mixin icon-position() {
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  color: inherit;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.g86-action-button {
+  // default
+  padding: 8px 15px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 3px;
+  background-color: $color-page-header-bg-grey;
+  border: 1px solid $color-header-separator-grey;
+  overflow: hidden;
+  outline: none;
+  position: relative;
+  margin-right: 15px;
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:before {
+    position: absolute;
+    display: block;
+    content: " ";
+    width: 200px;
+    height: 200px;
+    top: -200px;
+    left: -100px;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.25);
+    transition-duration: 0.3s;
+    // transition particular properties...
+    transform: translate3d(0, 0, 0);
+  }
+
+  &:hover {
+    &:before {
+      background-color: rgba(255, 255, 255, 0.15);
+      left: -80px;
+      top: -185px;
+    }
+  }
+
+  &:active {
+    transform: translate3d(0, 0, 0);
+    transform: scale(1.05, 1.05);
+    &:before {
+      left: -30px;
+      top: -85px;
+      box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.66;
+  }
+  &.is-loading {
+    .material-icons {
+      @include rotate-animation(1.5s);
+      @include icon-position;
+    }
+  }
+  &.has-icon {
+    padding-left: 36px;
+    .material-icons {
+      @include icon-position;
+    }
+  }
+  // color variations
+  &.blue {
+    border: 1px solid $color-g86-button-blue;
+    background-color: $color-g86-button-blue;
+    color: $color-the-white;
+    text-shadow: 0 0 2px darken($color-g86-button-blue, 20);
+  }
+  &.red {
+    background-color: $color-g86-button-red;
+    color: $color-the-white;
+    border: 1px solid $color-g86-button-red-border;
+    text-shadow: 0 0 3px $color-g86-button-red-border;
+  }
+  &.green {
+    background-color: darken($color-g86-menu-highlight-green, 10);
+    color: $color-the-white;
+    border: 1px solid darken($color-g86-menu-highlight-green, 15);
+    text-shadow: 0 0 3px darken($color-g86-menu-highlight-green, 25);
+  }
+  &.black {
+    border-color: $color-button-black;
+    color: $color-the-white;
+    background-color: $color-button-black;
+  }
+  &.grey {
+    border-color: $color-body-text-grey;
+    color: $color-the-white;
+    background-color: $color-body-text-grey;
+  }
+  &.outline-grey {
+    border: 1px solid $color-header-separator-grey;
+    color: $color-menu-text-grey;
+    background-color: transparent;
+    &:hover {
+      border-color: darken($color-header-separator-grey, 20);
+      color: darken($color-menu-text-grey, 20);
+      background-color: $color-page-header-bg-grey;
+    }
+  }
+  &.outline-green {
+    background-color: transparent;
+    border: 1px solid darken($color-g86-menu-highlight-green, 15);
+    color: darken($color-g86-menu-highlight-green, 15);
+    &:hover {
+      background-color: $color-page-header-bg-grey;
+    }
+  }
+  &.outline-blue {
+    background-color: transparent;
+    border: 1px solid $color-g86-headline-blue;
+    color: $color-g86-headline-blue;
+    &:hover {
+      background-color: $color-page-header-bg-grey;
+    }
+  }
+  &.outline-red {
+    background-color: transparent;
+    border: 1px solid $color-g86-button-red;
+    color: $color-g86-button-red;
+    &:hover {
+      background-color: $color-page-header-bg-grey;
+    }
+  }
+}

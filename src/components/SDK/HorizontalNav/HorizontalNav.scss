@@ -1,0 +1,54 @@
+@import "../SDK-globals";
+
+.g86-horizontal-nav {
+  position: relative;
+  border-left: 1px solid $color-menu-border-grey;
+  border-bottom: 3px solid $color-menu-border-grey;
+  white-space: nowrap;
+  a {
+    display: inline-block;
+    position: relative;
+    font-size: 17px;
+    line-height: 20px;
+    padding: 15px 20px;
+    text-decoration: none;
+    background-color: $color-the-white;
+    color: $color-menu-text-grey;
+    border-right: 1px solid $color-menu-border-grey;
+    transition-duration: 0.3s;
+    &:after {
+      display: block;
+      position: absolute;
+      bottom: -3px;
+      margin: 0;
+      left: 0;
+      width: 100%;
+      content: " ";
+      transition-duration: 0.3s;
+      border-bottom: 3px solid transparent;
+    }
+    &:hover {
+      &:after {
+        border-bottom: 3px solid $color-g86-menu-highlight-green;
+      }
+    }
+    &.current {
+      color: lighten($color-menu-text-grey, 15);
+      box-shadow: inset 0 -10px 20px lighten($color-menu-shadow, 40);
+      text-shadow: 0 -1px 2px $color-the-white;
+      &:after {
+        border-bottom: 3px solid $color-g86-menu-highlight-blue;
+      }
+    }
+  }
+  .nav-separator {
+    display: inline-block;
+    width: 10px;
+    border-left: 1px solid $color-the-white;
+    background-color: $color-page-header-bg-grey;
+    border-right: 1px solid $color-menu-border-grey;
+
+    line-height: 20px;
+    padding: 15px 0;
+  }
+}

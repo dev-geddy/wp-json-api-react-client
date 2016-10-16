@@ -1,0 +1,46 @@
+@import '../SDK-globals';
+
+.g86-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.g86-app-header {
+  flex-grow: 0;
+  border-bottom: 1px solid $color-menu-border-grey;
+}
+
+.g86-app-body {
+  flex-grow: 1;
+}
+
+.g86-app-footer {
+  border-top: 1px solid $color-menu-border-grey;
+  flex-grow: 0;
+}
+
+/* ================ Horizontal layout ================== */
+
+.g86-layout-horizontal {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.g86-aside {
+  flex-grow: 0;
+  width: 256px;
+  border-right: 1px solid $color-menu-border-grey;
+}
+
+.g86-body {
+  flex-grow: 1;
+  heihgt: 100%;
+}
+
+.g86-aside-left {}
+.g86-body-right {}
+.g86-aside-right {}
+.g86-body-left {}
