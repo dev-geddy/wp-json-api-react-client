@@ -10,6 +10,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import App from './App'
 import Home from './components/Home'
 import About from './components/About'
+import NotFound from './components/NotFound'
 
 // Add the reducer to your store on the `routing` key
 const store = createStore(
@@ -29,6 +30,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
         <Route path="about" component={About} />
+        <Route path="*" component={NotFound} />
       </Route>
     </Router>
   </Provider>,
