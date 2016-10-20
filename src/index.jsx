@@ -9,6 +9,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import App from './App'
 import Home from './components/Home'
+import PostView from './components/PostView'
 import About from './components/About'
 import NotFound from './components/NotFound'
 import SomethingWentWrong from './components/SomethingWentWrong'
@@ -31,6 +32,9 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
         <Route path="about" component={About} />
+        <Route path="post/:postSlug" component={PostView} />
+        <Route path="page/:pageSlug" component={Home} />
+        <Route path="category/:categorySlug" component={Home} />
         <Route path="error" component={SomethingWentWrong} />
         <Route path="*" component={NotFound} />
       </Route>

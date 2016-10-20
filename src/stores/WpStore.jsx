@@ -70,7 +70,7 @@ export class WpStore extends EventEmitter {
         this._fetchRecentPosts()
         break
       case WP_EVENT.GET_CATEGORY_INDEX.DEFAULT:
-        this._fetchCategoryIndex(action.postSlug)
+        this._fetchCategoryIndex()
         break
       case WP_EVENT.GET_POST.DEFAULT:
         this._fetchPost(action.postSlug)
@@ -124,19 +124,19 @@ export class WpStore extends EventEmitter {
   }
 
   _fetchPost(postSlug) {
-    this.callWpApi('GET', '/get_recent_posts/' + postSlug, 'post')
+    this.callWpApi('GET', '/get_post/?slug=' + postSlug, 'post')
   }
 
-  _fetchCategoryIndex(postSlug) {
-    this.callWpApi('GET', '/get_recent_posts/' + postSlug, 'categoryIndex')
+  _fetchCategoryIndex() {
+    this.callWpApi('GET', '/get_category_index/', 'categoryIndex')
   }
 
   _fetchCategoryPosts(categorySlug) {
-    this.callWpApi('GET', '/get_recent_posts/' + categorySlug, 'categoryPosts')
+    this.callWpApi('GET', '/get_category_posts/?slug=' + categorySlug, 'categoryPosts')
   }
 
   _fetchPage(pageSlug) {
-    this.callWpApi('GET', '/get_recent_posts/' + pageSlug, 'page')
+    this.callWpApi('GET', '/get_page/' + pageSlug, 'page')
   }
 
   callWpApi(METHOD, URL, dataKey) {
@@ -156,6 +156,14 @@ export class WpStore extends EventEmitter {
 
   get state() {
     return this.appState
+  }
+
+  stateOf(dataKey) {
+    return {
+      isLoading: this.appState.isLoading[dataKey],
+      data: this.appState.data[dataKey],
+      error: this.appState.error[dataKey]
+    }
   }
 }
 
