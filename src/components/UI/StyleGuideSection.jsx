@@ -3,7 +3,7 @@ import AppStore from '../../stores/AppStore'
 import AppDispatcher from '../../dispatchers/AppDispatcher'
 
 import Error from './Error'
-import Loader from './Loader'
+import Loader from './Loader/Loader'
 
 import PreviewBox from './PreviewBox'
 

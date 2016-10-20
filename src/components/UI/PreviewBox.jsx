@@ -4,7 +4,7 @@ import {cleanReactAttributes} from '../../helpers/previewHelper'
 import clipboard from 'clipboard-js'
 
 import Error from './Error'
-import Loader from './Loader'
+import Loader from './Loader/Loader'
 
 class PreviewBox extends Component {
   renderComponentsPreviews(renderedComponents, inLine = 0) {

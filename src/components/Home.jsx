@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import WpStore from '../stores/WpStore'
 import AppDispatcher from '../dispatchers/AppDispatcher'
 // import {Link} from 'react-router'
-import RecentPost from './WP/RecentPost'
+import RecentPost from './WP/partials/RecentPost'
+import Loader from './UI/Loader/Loader'
+import WP from '../modules/wp/config'
 
 class Home extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class Home extends Component {
   componentWillMount() {
     this._changeListener = this._onStoreChange.bind(this)
     WpStore.addChangeListener(this._changeListener)
-    AppDispatcher.dispatch({actionType: 'WP/GET_RECENT_POSTS'})
+    AppDispatcher.dispatch({actionType: WP.GET_RECENT_POSTS.DEFAULT})
   }
 
 
@@ -44,7 +46,9 @@ class Home extends Component {
 
   render() {
     const {
-      recentPosts
+      isLoading,
+      error,
+      data
       } = this.state
 
     return (
@@ -54,7 +58,10 @@ class Home extends Component {
           <p>Latest posts and categories are here.</p>
         </header>
         <section className="page-content">
-          <div className="row">{recentPosts.count && this._renderPosts(recentPosts.posts)}</div>
+          {isLoading && isLoading.recentPosts ?
+            <Loader text="Loading recent posts..." />
+            :<div className="row">{data.recentPosts.count && this._renderPosts(data.recentPosts.posts)}</div>}
+
         </section>
       </article>
     )

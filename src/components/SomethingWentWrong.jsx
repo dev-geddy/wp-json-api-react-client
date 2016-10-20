@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
 
-class NotFound extends Component {
+class SomethingWentWrong extends Component {
   render() {
     return (
       <article className="page">
         <header>
-          <h2>404 Not Found</h2>
-          <p>The resource yoy were looking for is not found.</p>
+          <h2>Something went wrong</h2>
+          <p>Unexpected application state.</p>
         </header>
         <section className="page-content">
-          <h1>404 Not Found</h1>
-          <p>The URL you have landed or manually entered does not exist on this project.</p>
+          <h3>Application has cought an error</h3>
+          <p>The page you were trying to view has received an error.</p>
           <p>You may start your browsing from <Link to="/">Home</Link>.</p>
         </section>
       </article>
@@ -19,4 +19,4 @@ class NotFound extends Component {
   }
 }
 
-export default NotFound
+export default SomethingWentWrong

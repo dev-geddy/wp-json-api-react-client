@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import _get from 'lodash/get'
+import _get from '../../../../node_modules/lodash/get'
 import {Link} from 'react-router'
 import './RecentPost.scss'
 

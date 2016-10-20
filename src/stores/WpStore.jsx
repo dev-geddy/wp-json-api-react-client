@@ -1,12 +1,11 @@
 import {EventEmitter} from 'events'
 import Request from '../services/Request'
 import AppDispatcher from '../dispatchers/AppDispatcher'
-// const BASE_URL = 'http://localhost:3601'
+// import WpService from '../services/WpService'
+
 const BASE_URL = 'http://api.include.lt/api'
 
-export const WP = {
-  GET_RECENT_POSTS: 'WP/GET_RECENT_POSTS'
-}
+import WP_EVENT from '../modules/wp/config'
 
 export class WpStore extends EventEmitter {
 
@@ -14,18 +13,36 @@ export class WpStore extends EventEmitter {
     super()
     this.subscribe(() => this._registerToActions.bind(this))
     this.appState = {
-      error: '',
+      error: {
+        recentPosts: '',
+        categoryPosts: '',
+        categoryIndex: '',
+        post: '',
+        page: '',
+      },
       isLoading: {
-        recentPosts: false
+        recentPosts: false,
+        categoryPosts: false,
+        categoryIndex: false,
+        post: false,
+        page: false,
+
+      },
+      data: {
+        recentPosts: [],
+        categoryPosts: [],
+        categoryIndex: [],
+        post: [],
+        page: []
       },
       recentPosts: {}
     }
-    /*this.defaultCssState = {
-     error: '',
-     isLoading: false,
-     cssSourceCode: ''
-     }*/
+    // this.service = this.service ? this.service : new WpService(this.onData)
   }
+
+  /*onData(data) {
+   console.log("onData: ", data)
+   }*/
 
   subscribe(actionSubscribe) {
     this._dispatchToken = AppDispatcher.register(actionSubscribe())
@@ -49,57 +66,91 @@ export class WpStore extends EventEmitter {
 
   _registerToActions(action) {
     switch (action.actionType) {
-      case 'WP/GET_RECENT_POSTS':
-        this._getRecentPosts()
+      case WP_EVENT.GET_RECENT_POSTS.DEFAULT:
+        this._fetchRecentPosts()
+        break
+      case WP_EVENT.GET_CATEGORY_INDEX.DEFAULT:
+        this._fetchCategoryIndex(action.postSlug)
+        break
+      case WP_EVENT.GET_POST.DEFAULT:
+        this._fetchPost(action.postSlug)
+        break
+      case WP_EVENT.GET_PAGE.DEFAULT:
+        this._fetchPost(action.pageSlug)
+        break
+      case WP_EVENT.GET_CATEGORY_POSTS.DEFAULT:
+        this._fetchCategoryPosts(action.categorySlug)
         break
       default:
         break
     }
   }
 
-  _emitError(e) {
-    this.appState = {
-      isLoading: {
-        recentPosts: false
-      },
-      recentPosts: {},
-      error: e.message
+  _emitError(dataKey, error) {
+    let newState = {
+      ...this.appState
     }
+    newState.error[dataKey] = error
+    newState.data[dataKey] = []
+    newState.isLoading[dataKey] = false
+    this.appState = newState
     this.emitChange()
   }
 
-  _emitData(data) {
-    this.appState = {
-      isLoading: {
-        recentPosts: false
-      },
-      recentPosts: data,
-      error: ''
+  _emitData(dataKey, data) {
+    let newState = {
+      ...this.appState
     }
+    newState.error[dataKey] = ''
+    newState.data[dataKey] = data || []
+    newState.isLoading[dataKey] = false
+    this.appState = newState
     this.emitChange()
   }
 
-  _getRecentPosts() {
-
-    this.appState = {
-      isLoading: {
-        recentPosts: true
-      },
-      recentPosts: '',
-      error: ''
+  _emitLoading(dataKey, isLoading) {
+    let newState = {
+      ...this.appState
     }
+    newState.error[dataKey] = ''
+    newState.data[dataKey] = []
+    newState.isLoading[dataKey] = isLoading
+    this.appState = newState
     this.emitChange()
+  }
 
+  _fetchRecentPosts() {
+    this.callWpApi('GET', '/get_recent_posts/', 'recentPosts')
+  }
+
+  _fetchPost(postSlug) {
+    this.callWpApi('GET', '/get_recent_posts/' + postSlug, 'post')
+  }
+
+  _fetchCategoryIndex(postSlug) {
+    this.callWpApi('GET', '/get_recent_posts/' + postSlug, 'categoryIndex')
+  }
+
+  _fetchCategoryPosts(categorySlug) {
+    this.callWpApi('GET', '/get_recent_posts/' + categorySlug, 'categoryPosts')
+  }
+
+  _fetchPage(pageSlug) {
+    this.callWpApi('GET', '/get_recent_posts/' + pageSlug, 'page')
+  }
+
+  callWpApi(METHOD, URL, dataKey) {
+    this._emitLoading(dataKey, true)
     Request.callEndpoint({
-      method: 'GET',
-      url: BASE_URL + '/get_recent_posts/'
+      method: METHOD,
+      url: BASE_URL + URL
     }).then((res)=> {
       let apiData = res.data
-      this._emitData(apiData)
+      this._emitData(dataKey, apiData)
     }, error => {
-      this._emitError(error)
+      this._emitError(dataKey, error)
     }).catch(error => {
-      this._emitError(error)
+      this._emitError(dataKey, error)
     })
   }
 
