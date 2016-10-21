@@ -1,0 +1,27 @@
+.breadcrumbs {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 13px;
+  ul {
+    li {
+      display: inline-block;
+      float: left;
+      position: relative;
+      padding: 5px 5px 5px 20px;
+      &:first-child {
+        padding-left: 0;
+      }
+      i {
+        position: absolute;
+        left: 0;
+        top: 7px;
+        font-size: 16px;
+      }
+      a {
+        display: inline-block;
+        position: relative;
+
+      }
+    }
+  }
+}
