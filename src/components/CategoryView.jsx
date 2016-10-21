@@ -7,7 +7,7 @@ import WP_EVENTS from '../modules/wp/config'
 import BreadCrumbs from './WP/partials/BreadCrumbs'
 import _get from 'lodash/get'
 
-class PostView extends Component {
+class CategoryView extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -65,4 +65,4 @@ class PostView extends Component {
   }
 }
 
-export default PostView
+export default CategoryView

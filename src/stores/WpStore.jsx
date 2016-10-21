@@ -120,7 +120,7 @@ export class WpStore extends EventEmitter {
   }
 
   _fetchRecentPosts() {
-    this.callWpApi('GET', '/get_recent_posts/', 'recentPosts')
+    this.callWpApi('GET', '/get_recent_posts/?count=15', 'recentPosts')
   }
 
   _fetchPost(postSlug) {

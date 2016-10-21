@@ -4,29 +4,23 @@ import AppDispatcher from '../../../dispatchers/AppDispatcher'
 import {Link} from 'react-router'
 import WP_EVENTS from '../../../modules/wp/config'
 import './BreadCrumbs.scss'
+import _get from 'lodash/get'
 
 export class BreadCrumbs extends Component {
   constructor(props) {
     super(props)
     this.state = {
       categorySlug: '',
-      categoryId: '',
-      postId: '',
       isLoading: false,
       breadcrumbs: null
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.state.categorySlug = nextProps.categorySlug
-    this.buildBreadCrumbs()
   }
 
   _onStoreChange() {
     this.setState({
       ...WpStore.stateOf('categoryIndex')
     })
-    // this.buildBreadcrumb.... => new state should build breadcrumbs in render method
+    console.log("categoryIndex: ",WpStore.stateOf('categoryIndex'))
   }
 
   componentWillMount() {
@@ -41,36 +35,31 @@ export class BreadCrumbs extends Component {
     this._changeListener = null
   }
 
-  findCategoryBySlug(slug) {
+  findCategoryById(id, categories) {
     let myCategory = {}
-    const {
-      categoryIndex
-      } = this.state
 
-    if (!categoryIndex) return false
-    categoryIndex.map((category)=> {
-      if (category.slug == slug) {
+    if (!categories) return false
+
+    categories.map((category)=> {
+      if (category.id === id) {
         myCategory = category
       }
     })
     return myCategory
   }
 
-  findParentCategoryById(id) {
+  findParentCategoryById(id, categories) {
     let myCategory = {}
-    const {
-      categoryIndex
-      } = this.state
-
-    categoryIndex.map((category)=> {
-      if (category.id == id) {
+    categories.map((category)=> {
+      if (category.id === id) {
         myCategory = category
       }
     })
+    console.log("findParentCategoryById::myCategory", myCategory)
     return myCategory
   }
 
-  buildBreadCrumbs() {
+  buildBreadCrumbs(categories, currentCategory) {
     let breadcrumbs = []
     let homeCrumb = {
       description: "",
@@ -81,15 +70,13 @@ export class BreadCrumbs extends Component {
       title: "Home"
     }
 
-    const {
-      categorySlug
-      } = this.props
+    const categoryId = _get(currentCategory,'id',0)
 
-    let breadcrumb = this.findCategoryBySlug(categorySlug)
+    let breadcrumb = this.findCategoryById(categoryId, categories)
     if (breadcrumb) {
       breadcrumbs.push(breadcrumb)
       while (breadcrumb.parent > 0) {
-        breadcrumb = this.findParentCategoryById(breadcrumb.parent)
+        breadcrumb = this.findParentCategoryById(breadcrumb.parent, categories)
         if (breadcrumb) {
           breadcrumbs.unshift(breadcrumb)
         }
@@ -99,14 +86,8 @@ export class BreadCrumbs extends Component {
     return breadcrumbs
   }
 
-  renderBreadCrumbs(categoryIndex) {
-    const {
-      currentName
-      } = this.props
-
-    let breadcrumbs = this.buildBreadCrumbs()
-
-    if (!breadcrumbs || !breadcrumbs.length) return <li>&nbsp;</li>
+  renderBreadCrumbs(currentCategory, currentName, categories) {
+    const breadcrumbs = (currentCategory && categories) ? this.buildBreadCrumbs(categories, currentCategory) : []
     let breadcrumbNodes = breadcrumbs.map((breadcrumb, index)=> {
       if (breadcrumb.title) {
         return (
@@ -120,8 +101,8 @@ export class BreadCrumbs extends Component {
     })
     if (currentName) {
       breadcrumbNodes.push(<li key="99999">
-        <i className="material-icons">keyboard_arrow_right</i><span
-        dangerouslySetInnerHTML={{__html: currentName}}></span>
+        <i className="material-icons">keyboard_arrow_right</i>
+        <span>{currentName}</span>
       </li>)
     }
     return breadcrumbNodes
@@ -129,14 +110,22 @@ export class BreadCrumbs extends Component {
 
   render() {
     const {
+      currentName,
+      currentCategory
+    } = this.props
+
+    const {
       isLoading,
-      categoryIndex,
+      data,
       error
       } = this.state
+
+    const categories = _get(data, 'categories')
+
     return (
       <div className="breadcrumbs">
         {error && <p>{error}</p>}
-        <ul>{isLoading ? <li>&nbsp;</li> : this.renderBreadCrumbs(categoryIndex)}</ul>
+        <ul>{isLoading ? <li>Loading...</li> : this.renderBreadCrumbs(currentCategory, currentName, categories)}</ul>
       </div>
     )
   }
