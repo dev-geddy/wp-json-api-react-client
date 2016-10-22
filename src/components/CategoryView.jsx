@@ -3,7 +3,7 @@ import WpStore from '../stores/WpStore'
 import AppDispatcher from '../dispatchers/AppDispatcher'
 import Loader from './UI/Loader/Loader'
 import WP_EVENTS from '../modules/wp/config'
-// import Post from './WP/Post'
+import PostsList from './WP/lists/PostsList'
 import BreadCrumbs from './WP/partials/BreadCrumbs'
 import _get from 'lodash/get'
 
@@ -19,14 +19,17 @@ class CategoryView extends Component {
 
   _onStoreChange() {
     this.setState({
-      ...WpStore.stateOf('post')
+      ...WpStore.stateOf('categoryPosts')
     })
   }
 
   componentWillMount() {
     this._changeListener = this._onStoreChange.bind(this)
     WpStore.addChangeListener(this._changeListener)
-    AppDispatcher.dispatch({actionType: WP_EVENTS.GET_POST.DEFAULT, postSlug: this.props.params.postSlug})
+    AppDispatcher.dispatch({
+      actionType: WP_EVENTS.GET_CATEGORY_POSTS.DEFAULT,
+      categorySlug: this.props.params.categorySlug
+    })
   }
 
   componentWillUnmount() {
@@ -46,19 +49,16 @@ class CategoryView extends Component {
     return (
       <article className="page">
         <header>
-          <h2>{_get(data,'post.title')}</h2>
-          <BreadCrumbs currentName={_get(data,'post.title')} currentCategory={_get(data,'post.categories[0]', {})} />
+          <h2>{_get(data,'category.title')}</h2>
+          <BreadCrumbs currentName={_get(data,'category.title')} currentCategory={_get(data,'category', {})} inCategory={true} />
         </header>
         <section className="page-content">
-          {error && <p>{error}</p>}
-          {isLoading ?
-            <Loader text="Loading posts..." />
-            :
-            <div className="wp-post-content">
-              {hasThumbnail && <img src={hasThumbnail} alt="ALT" style={{maxWidth: 500, width: '100%', height:'auto'}} />}
-              <div dangerouslySetInnerHTML={{__html: _get(data,'post.content')}} />
-              <p><small>By <strong>{_get(data, 'post.author.name')}</strong> at <em>{_get(data, 'post.date')}</em></small></p>
-            </div>}
+          {error ? <p>{error}</p> : <div>
+            {isLoading ?
+              <Loader text="Loading posts..." />
+              :
+              <div><PostsList posts={data.posts} /></div>}
+          </div>}
         </section>
       </article>
     )

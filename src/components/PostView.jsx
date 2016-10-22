@@ -46,7 +46,7 @@ class PostView extends Component {
     return (
       <article className="page">
         <header>
-          <h2>{_get(data,'post.title')}</h2>
+          <h2>{_get(data,'post.title','Post will be about...')}</h2>
           <BreadCrumbs currentName={_get(data,'post.title')} currentCategory={_get(data,'post.categories[0]', {})} />
         </header>
         <section className="page-content">

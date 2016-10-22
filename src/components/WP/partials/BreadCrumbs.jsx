@@ -59,7 +59,7 @@ export class BreadCrumbs extends Component {
     return myCategory
   }
 
-  buildBreadCrumbs(categories, currentCategory) {
+  buildBreadCrumbs(categories, currentCategory, inCategory) {
     let breadcrumbs = []
     let homeCrumb = {
       description: "",
@@ -74,7 +74,7 @@ export class BreadCrumbs extends Component {
 
     let breadcrumb = this.findCategoryById(categoryId, categories)
     if (breadcrumb) {
-      breadcrumbs.push(breadcrumb)
+      if (!inCategory) breadcrumbs.push(breadcrumb)
       while (breadcrumb.parent > 0) {
         breadcrumb = this.findParentCategoryById(breadcrumb.parent, categories)
         if (breadcrumb) {
@@ -86,8 +86,8 @@ export class BreadCrumbs extends Component {
     return breadcrumbs
   }
 
-  renderBreadCrumbs(currentCategory, currentName, categories) {
-    const breadcrumbs = (currentCategory && categories) ? this.buildBreadCrumbs(categories, currentCategory) : []
+  renderBreadCrumbs(currentCategory, currentName, categories, inCategory) {
+    const breadcrumbs = (currentCategory && categories) ? this.buildBreadCrumbs(categories, currentCategory, inCategory) : []
     let breadcrumbNodes = breadcrumbs.map((breadcrumb, index)=> {
       if (breadcrumb.title) {
         return (
@@ -111,7 +111,8 @@ export class BreadCrumbs extends Component {
   render() {
     const {
       currentName,
-      currentCategory
+      currentCategory,
+      inCategory
     } = this.props
 
     const {
@@ -125,7 +126,7 @@ export class BreadCrumbs extends Component {
     return (
       <div className="breadcrumbs">
         {error && <p>{error}</p>}
-        <ul>{isLoading ? <li>Loading...</li> : this.renderBreadCrumbs(currentCategory, currentName, categories)}</ul>
+        <ul>{isLoading ? <li>Loading...</li> : this.renderBreadCrumbs(currentCategory, currentName, categories, inCategory)}</ul>
       </div>
     )
   }
