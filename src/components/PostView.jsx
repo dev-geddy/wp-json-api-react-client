@@ -40,7 +40,6 @@ class PostView extends Component {
       error,
       data
     } = this.state
-    console.log(data)
 
     const hasThumbnail = _get(data,'post.thumbnail', false)
 
@@ -48,13 +47,13 @@ class PostView extends Component {
       <article className="page">
         <header>
           <h2 dangerouslySetInnerHTML={_get(data,'post.title', 'Post about...')} />
-          <p dangerouslySetInnerHTML={{__html: _get(data,'post.excerpt')}} />
+          <p dangerouslySetInnerHTML={{__html: _get(data,'post.excerpt')}} currentCategory={_get(data,'post.categories[0]', {})} />
         </header>
         <section className="page-content">
           <BreadCrumbs currentName={_get(data,'post.title')} categorySlug={_get(data,'post.category[0].slug')} />
           {error && <p>{error}</p>}
           {isLoading ?
-            <Loader text="Loading recent posts..." />
+            <Loader text="Loading posts..." />
             :
             <div className="wp-post-content">
               {hasThumbnail && <img src={hasThumbnail} alt="ALT" style={{maxWidth: 500, width: '100%', height:'auto'}} />}

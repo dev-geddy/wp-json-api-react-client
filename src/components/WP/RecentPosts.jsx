@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import WpStore from '../../stores/WpStore'
 import AppDispatcher from '../../dispatchers/AppDispatcher'
-import RecentPost from './partials/RecentPost'
+import RecentPost from './partials/PostItem'
 import Loader from './../UI/Loader/Loader'
 import WP from '../../modules/wp/config'
 

@@ -1,26 +1,33 @@
 .breadcrumbs {
-  padding-top: 10px;
-  padding-bottom: 10px;
   font-size: 13px;
+  padding-bottom: 10px;
   ul {
+    margin: 0;
+    min-height: 1.6em;
+    &:after {
+      clear: both;
+      content: " ";
+      display: table-cell;
+    }
     li {
       display: inline-block;
       float: left;
       position: relative;
-      padding: 5px 5px 5px 20px;
+      min-height: 1.6em;
+      line-height: 1.6em;
+      padding: 0 5px 0 20px;
       &:first-child {
         padding-left: 0;
       }
       i {
         position: absolute;
         left: 0;
-        top: 7px;
+        top: 3px;
         font-size: 16px;
       }
       a {
         display: inline-block;
         position: relative;
-
       }
     }
   }
