@@ -47,11 +47,11 @@ class PostView extends Component {
     return (
       <article className="page">
         <header>
-          <h2>{_get(data,'post.title')}</h2>
+          <h2 dangerouslySetInnerHTML={_get(data,'post.title', 'Post about...')} />
           <p dangerouslySetInnerHTML={{__html: _get(data,'post.excerpt')}} />
         </header>
         <section className="page-content">
-          <BreadCrumbs currentName={_get(data,'post.title')} categorySlug={_get(data,'post.category[0].slug', 'wrong lookup...')} />
+          <BreadCrumbs currentName={_get(data,'post.title')} categorySlug={_get(data,'post.category[0].slug')} />
           {error && <p>{error}</p>}
           {isLoading ?
             <Loader text="Loading recent posts..." />

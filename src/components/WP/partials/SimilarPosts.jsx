@@ -1,0 +1,1 @@
+// similar posts standalone component with few params, incl. post count

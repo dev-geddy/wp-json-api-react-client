@@ -27,13 +27,12 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render(
   <Provider store={store}>
-    { /* Tell the Router to use our enhanced history */ }
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
         <Route path="about" component={About} />
         <Route path="post/:postSlug" component={PostView} />
-        <Route path="page/:pageSlug" component={Home} />
+        <Route path="page/:pageSlug" component={PostView} />
         <Route path="category/:categorySlug" component={Home} />
         <Route path="error" component={SomethingWentWrong} />
         <Route path="*" component={NotFound} />
