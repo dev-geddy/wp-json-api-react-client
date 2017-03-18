@@ -1,6 +1,7 @@
 # React client for WordPress
 Project is for WP API based website.
 Plugin, usedfor WP API is "JSON API": https://wordpress.org/plugins/json-api/
+Preview of this app: http://g86-reactwp.include.lt/
 
 ## How to run
 Once project is checked out, run the following commands:
